@@ -1,5 +1,7 @@
 # geheugen
 
+[![Build Status](https://travis-ci.org/kjots/geheugen.svg?branch=master)](https://travis-ci.org/kjots/geheugen)
+
 > A memoisation toolkit.
 
 ## Installation
