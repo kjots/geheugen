@@ -30,7 +30,19 @@ memo.reset();
 
 #### constructors
 
-##### new Memo({ dependencies, factory, promise, value })
+##### new Memo({ Q, dependencies, factory, promise, value })
+
+###### Q
+Type: `Class`
+
+Default: `Promise`
+
+The promise implementation.
+
+The promise implementation should at a minimum implement the following methods:
+
+ * `Promise.resolve()`
+ * `Promise.all()`
 
 ###### dependencies
 Type: `Array<Memo>`
@@ -87,6 +99,11 @@ Remove the value from the memo.
 Any memo that has specified this memo as a dependency will also be reset.
 
 #### properties 
+
+###### Q
+Type: `Class`
+
+The promise implementation.
 
 #### dependencies
 Type: `Array<Memo>`

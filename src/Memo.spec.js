@@ -6,15 +6,17 @@ describe('Memo', () => {
     describe('constructor()', () => {
         it('should store the provided arguments', () => {
             // Given
+            let Q = {};
             let dependencies = [];
             let factory = () => {};
             let promise = new Promise(() => {});
             let value = {};
 
             // When
-            let memo = new Memo({ dependencies, factory, promise, value });
+            let memo = new Memo({ Q, dependencies, factory, promise, value });
 
             // Then
+            expect(memo.Q).to.equal(Q);
             expect(memo.dependencies).to.equal(dependencies);
             expect(memo.factory).to.equal(factory);
             expect(memo.promise).to.equal(promise);

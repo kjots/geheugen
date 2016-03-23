@@ -2,6 +2,7 @@ import 'promise.prototype.finally';
 
 export class Memo {
     constructor({
+        Q = Promise,
         dependencies = [],
         factory = () => {},
         promise,
@@ -11,18 +12,18 @@ export class Memo {
             dependency.dependants.push(this);
         });
 
-        return Object.assign(this, { dependencies, factory, promise, value, dependants: [] });
+        return Object.assign(this, { Q, dependencies, factory, promise, value, dependants: [] });
     }
 
     resolve() {
         if (this.value !== undefined) {
-            return Promise.resolve(this.value);
+            return this.Q.resolve(this.value);
         }
         else if (this.promise !== undefined) {
             return this.promise;
         }
         else {
-            this.promise = Promise.all(this.dependencies.map(dependency => dependency.resolve()))
+            this.promise = this.Q.all(this.dependencies.map(dependency => dependency.resolve()))
                 .then(this.factory)
                 .then(value => {
                     this.value = value;
