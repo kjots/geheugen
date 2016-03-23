@@ -1,6 +1,7 @@
 # geheugen
 
 [![Build Status](https://travis-ci.org/kjots/geheugen.svg?branch=master)](https://travis-ci.org/kjots/geheugen)
+[![npm version](https://badge.fury.io/js/geheugen.svg)](https://badge.fury.io/js/geheugen)
 
 > A memoisation toolkit.
 
