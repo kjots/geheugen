@@ -8,6 +8,19 @@
 npm install --save geheugen
 ```
 
+## Usage
+
+```js
+import { memoise } from 'geheugen';
+
+let memo = memoise({ factory: () => getAsyncValue() });
+
+let promise = memo.resolve()
+    .then(asyncValue => { ... })
+    
+memo.reset();
+```
+
 ## API
 
 ### Memo
