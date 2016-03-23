@@ -1,0 +1,14 @@
+/.idea/
+/*.iml
+
+/.project
+/.classpath
+/.settings/
+
+/node_modules/
+/.npmignore
+/npm-debug.log
+
+/tmp/
+/.babelrc
+/gulpfile.babel.js
