@@ -43,6 +43,9 @@ The promise implementation should at a minimum implement the following methods:
 
  * `Promise.resolve()`
  * `Promise.all()`
+ 
+**Note:** The promise implementation must implement the `.finally()` promise method.  A polyfill for the ES6 Promise 
+API can be found at https://www.npmjs.com/package/promise.prototype.finally.
 
 ###### dependencies
 Type: `Array<Memo>`

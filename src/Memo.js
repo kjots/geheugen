@@ -1,5 +1,3 @@
-import 'promise.prototype.finally';
-
 export class Memo {
     constructor({
         Q = Promise,

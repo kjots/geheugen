@@ -1,6 +1,7 @@
 'use strict';
 
 import 'babel-polyfill';
+import 'promise.prototype.finally';
 
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
