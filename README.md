@@ -44,6 +44,24 @@ var promise = memo.resolve()
 memo.reset();
 ```
 
+### In a browser
+
+```html
+<script src="babel-polyfill/dist/polyfill.js"></script>
+<script src="promise.prototype.finally/finally.js"></script>
+
+<script src="geheugen/dist/geheugen.js"></script>
+
+<script>
+    var memo = geheugen.memoise({ factory: function () { return getAsyncValue(); } });
+
+    var promise = memo.resolve()
+        .then(function (asyncValue) { ... })
+    
+    memo.reset();
+</script>
+```
+
 ## API
 
 ### Memo
