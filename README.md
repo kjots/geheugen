@@ -13,13 +13,33 @@ npm install --save geheugen
 
 ## Usage
 
+### As an ES6 module
+
 ```js
+import 'promise.prototype.finally';
+
 import { memoise } from 'geheugen';
 
 let memo = memoise({ factory: () => getAsyncValue() });
 
 let promise = memo.resolve()
     .then(asyncValue => { ... })
+    
+memo.reset();
+```
+
+### As an ES5 module
+
+```js
+require('babel-polyfill');
+require('promise.prototype.finally');
+
+var memoise = require('geheugen').memoise;
+
+var memo = memoise({ factory: function () { return getAsyncValue(); } });
+
+var promise = memo.resolve()
+    .then(function (asyncValue) { ... })
     
 memo.reset();
 ```
