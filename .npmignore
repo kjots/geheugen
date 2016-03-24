@@ -11,4 +11,5 @@
 
 /tmp/
 /.babelrc
+/.travis.yml
 /gulpfile.babel.js
