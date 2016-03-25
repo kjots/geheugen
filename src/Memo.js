@@ -1,6 +1,7 @@
 export class Memo {
     constructor({
         Q = Promise,
+        singleton = true,
         dependencies = [],
         factory = () => {},
         promise,
@@ -10,11 +11,11 @@ export class Memo {
             dependency.dependants.push(this);
         });
 
-        return Object.assign(this, { Q, dependencies, factory, promise, value, dependants: [] });
+        return Object.assign(this, { Q, singleton, dependencies, factory, promise, value, dependants: [] });
     }
 
     resolve() {
-        if (this.value !== undefined) {
+        if (this.singleton && this.value !== undefined) {
             return this.Q.resolve(this.value);
         }
         else if (this.promise !== undefined) {

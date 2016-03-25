@@ -7,16 +7,18 @@ describe('Memo', () => {
         it('should store the provided arguments', () => {
             // Given
             let Q = {};
+            let singleton = false;
             let dependencies = [];
             let factory = () => {};
             let promise = new Promise(() => {});
             let value = {};
 
             // When
-            let memo = new Memo({ Q, dependencies, factory, promise, value });
+            let memo = new Memo({ Q, singleton, dependencies, factory, promise, value });
 
             // Then
             expect(memo.Q).to.equal(Q);
+            expect(memo.singleton).to.equal(singleton);
             expect(memo.dependencies).to.equal(dependencies);
             expect(memo.factory).to.equal(factory);
             expect(memo.promise).to.equal(promise);
@@ -140,16 +142,34 @@ describe('Memo', () => {
         });
 
         describe('when the memo has a value', () => {
-            it('should return a promise resolved with the value', () => {
-                // Given
-                let memo = new Memo();
-                let value = memo.value = {};
+            describe('when the singleton flag is not set', () => {
+                it('should return a promise via the factory', () => {
+                    // Given
+                    let memo = new Memo({ singleton: false, factory: () => 'Test Factory Value' });
 
-                // When
-                let promise = memo.resolve();
+                    memo.value = 'Test Memo Value';
 
-                // Then
-                return expect(promise).to.eventually.equal(value);
+                    // When
+                    let promise = memo.resolve();
+
+                    // Then
+                    return expect(promise).to.eventually.equal('Test Factory Value');
+                });
+            });
+
+            describe('when the singleton flag is set', () => {
+                it('should return a promise resolved with the value', () => {
+                    // Given
+                    let memo = new Memo({ singleton: true, factory: () => 'Test Factory Value' });
+
+                    memo.value = 'Test Memo Value';
+
+                    // When
+                    let promise = memo.resolve();
+
+                    // Then
+                    return expect(promise).to.eventually.equal('Test Memo Value');
+                });
             });
         });
     });

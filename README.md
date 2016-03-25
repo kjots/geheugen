@@ -68,7 +68,7 @@ memo.reset();
 
 #### constructors
 
-##### new Memo({ Q, dependencies, factory, promise, value })
+##### new Memo({ Q, singleton, dependencies, factory, promise, value })
 
 ###### Q
 Type: `Class`
@@ -84,6 +84,13 @@ The promise implementation should at a minimum implement the following methods:
  
 **Note:** The promise implementation must implement the `.finally()` promise method.  A polyfill for the ES6 Promise 
 API can be found at https://www.npmjs.com/package/promise.prototype.finally.
+
+###### singleton
+Type: `Boolean`
+
+Default: `true`
+
+The singleton flag.
 
 ###### dependencies
 Type: `Array<Memo>`
@@ -114,7 +121,7 @@ The value.
 
 Resolve the memo.
 
-###### If the memo has a value
+###### If the memo has a value and the singleton flag is set
 
 Return a promise resolved with the value.
 
@@ -145,6 +152,11 @@ Any memo that has specified this memo as a dependency will also be reset.
 Type: `Class`
 
 The promise implementation.
+
+##### singleton
+Type: `Boolean`
+
+The singleton flag.
 
 ##### dependencies
 Type: `Array<Memo>`
