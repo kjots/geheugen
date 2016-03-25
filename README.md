@@ -141,12 +141,12 @@ Any memo that has specified this memo as a dependency will also be reset.
 
 #### properties 
 
-###### Q
+##### Q
 Type: `Class`
 
 The promise implementation.
 
-#### dependencies
+##### dependencies
 Type: `Array<Memo>`
 
 The dependencies.
@@ -165,7 +165,7 @@ The promise.
 
 The value.
 
-#### dependants
+##### dependants
 Type: `Array<Memo>`
 
 The dependants.
