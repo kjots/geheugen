@@ -6,6 +6,7 @@ import chokidar from 'chokidar';
 import del from 'del';
 import gulp from 'gulp';
 import gulpBabel from 'gulp-babel';
+import gulpJshint from 'gulp-jshint';
 import gulpMocha from 'gulp-mocha';
 import gulpSourcemaps from 'gulp-sourcemaps';
 import gulpUtil from 'gulp-util';
@@ -47,7 +48,16 @@ function compile(pattern, logErrors) {
         .pipe(gulp.dest('lib'));
 }
 
-gulp.task('test', [], () => {
+gulp.task('test', [ 'test:jshint', 'test:mocha' ]);
+
+gulp.task('test:jshint', [], () => {
+    return gulp.src(srcPattern)
+        .pipe(gulpJshint())
+        .pipe(gulpJshint.reporter('jshint-stylish'))
+        .pipe(gulpJshint.reporter('fail'));
+});
+
+gulp.task('test:mocha', [], () => {
     return gulp.src([ 'test/**/*.spec.js', 'src/**/*.spec.js' ], { read: false })
         .pipe(gulpMocha({
             require: [ './test/init.js' ]
