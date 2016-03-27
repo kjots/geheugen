@@ -9,17 +9,19 @@ describe('Memo', () => {
             let Q = {};
             let singleton = false;
             let dependencies = [];
+            let onReset = () => {};
             let factory = () => {};
             let promise = new Promise(() => {});
             let value = {};
 
             // When
-            let memo = new Memo({ Q, singleton, dependencies, factory, promise, value });
+            let memo = new Memo({ Q, singleton, dependencies, onReset, factory, promise, value });
 
             // Then
             expect(memo.Q).to.equal(Q);
             expect(memo.singleton).to.equal(singleton);
             expect(memo.dependencies).to.equal(dependencies);
+            expect(memo.onReset).to.equal(onReset);
             expect(memo.factory).to.equal(factory);
             expect(memo.promise).to.equal(promise);
             expect(memo.value).to.equal(value);
@@ -175,7 +177,7 @@ describe('Memo', () => {
     });
 
     describe('reset()', () => {
-        describe('when the memo has dependant', () => {
+        describe('when the memo has dependants', () => {
             it('should reset the dependants', () => {
                 // Given
                 let memo = new Memo();
@@ -195,6 +197,19 @@ describe('Memo', () => {
                     expect(dependant.reset).to.have.been.called;
                 });
             });
+        });
+
+        it('should invoke the reset event handler', () => {
+            // Given
+            let memo = new Memo();
+
+            sinon.spy(memo, 'onReset');
+
+            // When
+            memo.reset();
+
+            // Then
+            expect(memo.onReset).to.have.been.called;
         });
 
         it('should remove the value', () => {

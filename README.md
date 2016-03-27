@@ -68,7 +68,7 @@ memo.reset();
 
 #### constructors
 
-##### new Memo({ Q, singleton, dependencies, factory, promise, value })
+##### new Memo({ Q, singleton, dependencies, onReset factory, promise, value })
 
 ###### Q
 Type: `Class`
@@ -98,6 +98,15 @@ Type: `Array<Memo>`
 Default: `[]`
 
 The dependencies.
+
+###### onReset
+Type: `Function`
+
+Default: `() => {}`
+
+The reset event handler.
+
+The reset event handler will be invoked when the `reset()` method is invoked.
 
 ###### factory
 Type: `Function`
@@ -144,6 +153,8 @@ The returned value will be stored on the memo.
 
 Remove the value from the memo.
 
+The reset event handler will be invoked immediately before the value is removed.
+
 Any memo that has specified this memo as a dependency will also be reset.
 
 #### properties 
@@ -162,6 +173,11 @@ The singleton flag.
 Type: `Array<Memo>`
 
 The dependencies.
+
+###### onReset
+Type: `Function`
+
+The reset event handler.
 
 ##### factory
 Type: `Function`
