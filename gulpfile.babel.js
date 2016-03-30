@@ -48,6 +48,22 @@ function compile(pattern, logErrors) {
         .pipe(gulp.dest('lib'));
 }
 
+function dist(recompile) {
+    if (recompile) {
+        compile(srcPattern, true);
+    }
+
+    gulpUtil.log('Creating distribution');
+
+    return browserify('./lib/index.js', { debug: true, standalone: packageInfo.name })
+        .bundle()
+        .pipe(vinylSourceStream(`${packageInfo.name}.js`))
+        .pipe(vinylBuffer())
+        .pipe(gulpSourcemaps.init({ loadMaps: true }))
+        .pipe(gulpSourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
+        .pipe(gulp.dest(distBaseDir));
+}
+
 gulp.task('test', [ 'test:jshint', 'test:mocha' ]);
 
 gulp.task('test:jshint', [], () => {
@@ -66,7 +82,7 @@ gulp.task('test:mocha', [], () => {
 
 gulp.task('compile', () => compile(srcPattern));
 
-gulp.task('watch', ['compile'], () => {
+gulp.task('watch:compile', [ 'compile' ], () => {
     chokidar.watch(srcPattern, { ignoreInitial: true })
         .on('add', srcPath => compile(srcPath, true))
         .on('change', srcPath => compile(srcPath, true))
@@ -77,14 +93,13 @@ gulp.task('watch', ['compile'], () => {
         });
 });
 
-gulp.task('dist', ['compile'], () => {
-    return browserify('./lib/index.js', { debug: true, standalone: packageInfo.name })
-        .bundle()
-        .pipe(vinylSourceStream(`${packageInfo.name}.js`))
-        .pipe(vinylBuffer())
-        .pipe(gulpSourcemaps.init({ loadMaps: true }))
-        .pipe(gulpSourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
-        .pipe(gulp.dest(distBaseDir));
+gulp.task('dist', [ 'compile' ], () => dist());
+
+gulp.task('watch:dist', [ 'dist' ], () => {
+    chokidar.watch(srcPattern, { ignoreInitial: true })
+        .on('add', srcPath => dist(true))
+        .on('change', srcPath => dist(true))
+        .on('unlink', srcPath => dist(true));
 });
 
 gulp.task('clean', () => del([ distBaseDir, libBaseDir ]));
