@@ -225,4 +225,26 @@ describe('Memo', () => {
             expect(memo.value).to.be.undefined;
         });
     });
+
+    describe('resetDependants()', () => {
+        it('should reset the dependants', () => {
+            // Given
+            let memo = new Memo();
+            let dependants = [ 1, 2, 3 ].map(n => {
+                let dependant = new Memo({ dependencies: [ memo ] });
+
+                sinon.spy(dependant, 'reset');
+
+                return dependant;
+            });
+
+            // When
+            memo.resetDependants();
+
+            // Then
+            dependants.forEach(dependant => {
+                expect(dependant.reset).to.have.been.called;
+            });
+        });
+    });
 });

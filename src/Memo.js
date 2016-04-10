@@ -39,10 +39,14 @@ export class Memo {
     }
 
     reset() {
-        this.dependants.forEach(dependant => dependant.reset());
+        this.resetDependants();
 
         this.onReset();
 
         delete this.value;
+    }
+
+    resetDependants() {
+        this.dependants.forEach(dependant => dependant.reset());
     }
 }

@@ -157,6 +157,10 @@ The reset event handler will be invoked immediately before the value is removed.
 
 Any memo that has specified this memo as a dependency will also be reset.
 
+##### resetDependants()
+
+Reset all memos that have specified this memo as a dependency.
+
 #### properties 
 
 ##### Q
