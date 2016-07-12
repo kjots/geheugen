@@ -1,5 +1,3 @@
-import sinon from 'sinon';
-
 import { Memo } from './Memo.js';
 
 describe('Memo', () => {
