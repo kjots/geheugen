@@ -24,6 +24,10 @@
   "bugs": {
     "url": "https://github.com/kjots/geheugen/issues"
   },
+  "engines": {
+    "node": ">=4",
+    "npm": ">=3"
+  },
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-polyfill": "^6.9.1",
@@ -43,6 +47,7 @@
     "gulp-mocha": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
+    "mocha": "^2.5.3",
     "promise.prototype.finally": "^1.0.1",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
