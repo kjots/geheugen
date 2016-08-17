@@ -3,6 +3,7 @@ export class Memo {
         Q = Promise,
         singleton = true,
         dependencies = [],
+        onSet = () => {},
         onReset = () => {},
         factory = () => {},
         promise,
@@ -12,7 +13,7 @@ export class Memo {
             dependency.dependants.push(this);
         });
 
-        return Object.assign(this, { Q, singleton, dependencies, onReset, factory, promise, value, dependants: [] });
+        return Object.assign(this, { Q, singleton, dependencies, onSet, onReset, factory, promise, value, dependants: [] });
     }
 
     resolve() {
@@ -36,6 +37,18 @@ export class Memo {
 
             return this.promise;
         }
+    }
+
+    get() {
+        return this.value;
+    }
+
+    set(value) {
+        this.resetDependants();
+
+        this.onSet(value);
+
+        this.value = value;
     }
 
     reset() {

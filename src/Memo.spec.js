@@ -7,18 +7,20 @@ describe('Memo', () => {
             let Q = {};
             let singleton = false;
             let dependencies = [];
+            let onSet = (value) => {};
             let onReset = () => {};
             let factory = () => {};
             let promise = new Promise(() => {});
             let value = {};
 
             // When
-            let memo = new Memo({ Q, singleton, dependencies, onReset, factory, promise, value });
+            let memo = new Memo({ Q, singleton, dependencies, onSet, onReset, factory, promise, value });
 
             // Then
             expect(memo.Q).to.equal(Q);
             expect(memo.singleton).to.equal(singleton);
             expect(memo.dependencies).to.equal(dependencies);
+            expect(memo.onSet).to.equal(onSet);
             expect(memo.onReset).to.equal(onReset);
             expect(memo.factory).to.equal(factory);
             expect(memo.promise).to.equal(promise);
@@ -171,6 +173,69 @@ describe('Memo', () => {
                     return expect(promise).to.eventually.equal('Test Memo Value');
                 });
             });
+        });
+    });
+
+    describe('get()', () => {
+        it('should return the value', () => {
+            // Given
+            let memo = new Memo();
+
+            memo.value = 'Test Memo Value';
+
+            // When
+            let value = memo.get();
+
+            // Then
+            expect(value).to.equal('Test Memo Value');
+        });
+    });
+
+    describe('set()', () => {
+        context('when the memo has dependants', () => {
+            it('should reset the dependants', () => {
+                // Given
+                let memo = new Memo();
+                let dependants = [ 1, 2, 3 ].map(n => {
+                    let dependant = new Memo({ dependencies: [ memo ] });
+
+                    sinon.spy(dependant, 'reset');
+
+                    return dependant;
+                });
+
+                // When
+                memo.set('Test Memo Value');
+
+                // Then
+                dependants.forEach(dependant => {
+                    expect(dependant.reset).to.have.been.called;
+                });
+            });
+        });
+
+        it('should invoke the set event handler with the value', () => {
+            // Given
+            let memo = new Memo();
+
+            sinon.spy(memo, 'onSet');
+
+            // When
+            memo.set('Test Memo Value');
+
+            // Then
+            expect(memo.onSet).to.have.been.calledWith('Test Memo Value');
+        });
+
+        it('should update the value', () => {
+            // Given
+            let memo = new Memo();
+
+            // When
+            memo.set('Test Memo Value');
+
+            // Then
+            expect(memo.value).to.equal('Test Memo Value');
         });
     });
 
