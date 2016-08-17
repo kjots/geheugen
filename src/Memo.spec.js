@@ -28,7 +28,7 @@ describe('Memo', () => {
     });
 
     describe('resolve()', () => {
-        describe('when the memo has no dependencies', () => {
+        context('when the memo has no dependencies', () => {
             it('should invoke the factory with no arguments', () => {
                 // Given
                 let factory = sinon.spy();
@@ -44,7 +44,7 @@ describe('Memo', () => {
             });
         });
 
-        describe('when the memo has dependencies', () => {
+        context('when the memo has dependencies', () => {
             it('should invoke the factory with the resolved values of the dependencies', () => {
                 // Given
                 let values = [ 'testValue1', 'testValue2', 'testValue3' ];
@@ -85,7 +85,7 @@ describe('Memo', () => {
             expect(memo.promise).to.equal(promise);
         });
 
-        describe('when the promise succeeds', () => {
+        context('when the promise succeeds', () => {
             it('should store the value of the promise', () => {
                 // Given
                 let value = {};
@@ -113,7 +113,7 @@ describe('Memo', () => {
             });
         });
 
-        describe('when the promise fails', () => {
+        context('when the promise fails', () => {
             it('should remove the promise', () => {
                 // Given
                 let memo = new Memo({ factory: () => Promise.reject() });
@@ -127,7 +127,7 @@ describe('Memo', () => {
             });
         });
 
-        describe('when the memo has a promise', () => {
+        context('when the memo has a promise', () => {
             it('should return the promise', () => {
                 // Given
                 let memo = new Memo();
@@ -141,8 +141,8 @@ describe('Memo', () => {
             });
         });
 
-        describe('when the memo has a value', () => {
-            describe('when the singleton flag is not set', () => {
+        context('when the memo has a value', () => {
+            context('when the singleton flag is not set', () => {
                 it('should return a promise via the factory', () => {
                     // Given
                     let memo = new Memo({ singleton: false, factory: () => 'Test Factory Value' });
@@ -157,7 +157,7 @@ describe('Memo', () => {
                 });
             });
 
-            describe('when the singleton flag is set', () => {
+            context('when the singleton flag is set', () => {
                 it('should return a promise resolved with the value', () => {
                     // Given
                     let memo = new Memo({ singleton: true, factory: () => 'Test Factory Value' });
@@ -175,7 +175,7 @@ describe('Memo', () => {
     });
 
     describe('reset()', () => {
-        describe('when the memo has dependants', () => {
+        context('when the memo has dependants', () => {
             it('should reset the dependants', () => {
                 // Given
                 let memo = new Memo();
