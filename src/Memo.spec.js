@@ -192,6 +192,68 @@ describe('Memo', () => {
     });
 
     describe('set()', () => {
+        context('when the memo has a set event hander', () => {
+            let memo;
+
+            beforeEach(() => {
+                memo = new Memo({ onSet: sinon.stub() });
+            });
+
+            it('should invoke the set event handler with the value', () => {
+                // Given
+
+                // When
+                memo.set('Test Memo Value');
+
+                // Then
+                expect(memo.onSet).to.have.been.calledWith('Test Memo Value');
+            });
+
+            context('when the set event handler throws an error', () => {
+                beforeEach(() => {
+                    memo.onSet.throws();
+                });
+
+                context('when the memo has dependants', () => {
+                    it('should not reset the dependants', () => {
+                        // Given
+                        let dependants = [ 1, 2, 3 ].map(n => {
+                            let dependant = new Memo({ dependencies: [ memo ] });
+
+                            sinon.spy(dependant, 'reset');
+
+                            return dependant;
+                        });
+
+                        // When
+                        try {
+                            memo.set('Test Memo Value');
+                        }
+                        catch (e) {}
+
+                        // Then
+                        dependants.forEach(dependant => {
+                            expect(dependant.reset).to.not.have.been.called;
+                        });
+                    });
+                });
+
+                it('should not update the value', () => {
+                    // Given
+                    memo.value = 'Test Memo Value';
+
+                    // When
+                    try {
+                        memo.set('New Test Memo Value');
+                    }
+                    catch (e) {}
+
+                    // Then
+                    expect(memo.value).to.equal('Test Memo Value');
+                });
+            });
+        });
+
         context('when the memo has dependants', () => {
             it('should reset the dependants', () => {
                 // Given
@@ -214,32 +276,83 @@ describe('Memo', () => {
             });
         });
 
-        it('should invoke the set event handler with the value', () => {
-            // Given
-            let memo = new Memo();
-
-            sinon.spy(memo, 'onSet');
-
-            // When
-            memo.set('Test Memo Value');
-
-            // Then
-            expect(memo.onSet).to.have.been.calledWith('Test Memo Value');
-        });
-
         it('should update the value', () => {
             // Given
             let memo = new Memo();
 
+            memo.value = 'Test Memo Value';
+
             // When
-            memo.set('Test Memo Value');
+            memo.set('New Test Memo Value');
 
             // Then
-            expect(memo.value).to.equal('Test Memo Value');
+            expect(memo.value).to.equal('New Test Memo Value');
         });
     });
 
     describe('reset()', () => {
+        context('when the memo has a reset event hander', () => {
+            let memo;
+
+            beforeEach(() => {
+                memo = new Memo({ onReset: sinon.stub() });
+            });
+
+            it('should invoke the reset event handler', () => {
+                // Given
+
+                // When
+                memo.reset();
+
+                // Then
+                expect(memo.onReset).to.have.been.called;
+            });
+
+            context('when the reset event handler throws an error', () => {
+                beforeEach(() => {
+                    memo.onReset.throws();
+                });
+
+                context('when the memo has dependants', () => {
+                    it('should not reset the dependants', () => {
+                        // Given
+                        let dependants = [ 1, 2, 3 ].map(n => {
+                            let dependant = new Memo({ dependencies: [ memo ] });
+
+                            sinon.spy(dependant, 'reset');
+
+                            return dependant;
+                        });
+
+                        // When
+                        try {
+                            memo.reset();
+                        }
+                        catch (e) {}
+
+                        // Then
+                        dependants.forEach(dependant => {
+                            expect(dependant.reset).to.not.have.been.called;
+                        });
+                    });
+                });
+
+                it('should not remove the value', () => {
+                    // Given
+                    memo.value = 'Test Memo Value';
+
+                    // When
+                    try {
+                        memo.reset();
+                    }
+                    catch (e) {}
+
+                    // Then
+                    expect(memo.value).to.equal('Test Memo Value');
+                });
+            });
+        });
+
         context('when the memo has dependants', () => {
             it('should reset the dependants', () => {
                 // Given
@@ -262,24 +375,11 @@ describe('Memo', () => {
             });
         });
 
-        it('should invoke the reset event handler', () => {
-            // Given
-            let memo = new Memo();
-
-            sinon.spy(memo, 'onReset');
-
-            // When
-            memo.reset();
-
-            // Then
-            expect(memo.onReset).to.have.been.called;
-        });
-
         it('should remove the value', () => {
             // Given
             let memo = new Memo();
 
-            memo.value = {};
+            memo.value = 'Test Memo Value';
 
             // When
             memo.reset();

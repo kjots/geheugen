@@ -166,13 +166,17 @@ Return the value the the memo.
 
 Update the value of the memo.
 
+The set event handler will be invoked before the value is updated.  If the set event handler throws an error the set
+operation will be aborted.
+
 Any memo that has specified this memo as a dependency will be reset.
 
 ##### reset()
 
 Remove the value from the memo.
 
-The reset event handler will be invoked immediately before the value is removed.
+The reset event handler will be invoked before the value is removed.  If the reset event handler throws an error the
+reset operation will be aborted.
 
 Any memo that has specified this memo as a dependency will also be reset.
 

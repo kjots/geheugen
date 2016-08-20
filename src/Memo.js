@@ -44,17 +44,17 @@ export class Memo {
     }
 
     set(value) {
-        this.resetDependants();
-
         this.onSet(value);
+
+        this.resetDependants();
 
         this.value = value;
     }
 
     reset() {
-        this.resetDependants();
-
         this.onReset();
+
+        this.resetDependants();
 
         delete this.value;
     }
