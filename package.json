@@ -33,7 +33,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-polyfill": "^6.20.0",
     "babel-preset-es2016": "^6.16.0",
-    "babel-preset-stage-3": "^6.17.0",
+    "babel-preset-es2017": "^6.16.0",
     "browserify": "^13.3.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
