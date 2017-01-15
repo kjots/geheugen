@@ -1,14 +1,14 @@
 # geheugen
 
 [![Build Status](https://travis-ci.org/kjots/geheugen.svg?branch=master)](https://travis-ci.org/kjots/geheugen)
-[![npm version](https://badge.fury.io/js/geheugen.svg)](https://www.npmjs.com/package/geheugen)
+[![npm version](https://badge.fury.io/js/%40kjots%2Fgeheugen.svg)](https://www.npmjs.com/package/@kjots/geheugen)
 
 > A memoisation toolkit.
 
 ## Installation
 
 ```shell
-npm install --save geheugen
+npm install --save @kjots/geheugen
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ npm install --save geheugen
 ```js
 import 'promise.prototype.finally';
 
-import { memoise } from 'geheugen';
+import { memoise } from '@kjots/geheugen';
 
 let memo = memoise({ factory: () => getAsyncValue() });
 
@@ -34,7 +34,7 @@ memo.reset();
 require('babel-polyfill');
 require('promise.prototype.finally');
 
-var memoise = require('geheugen').memoise;
+var memoise = require('@kjots/geheugen').memoise;
 
 var memo = memoise({ factory: function () { return getAsyncValue(); } });
 
@@ -50,7 +50,7 @@ memo.reset();
 <script src="babel-polyfill/dist/polyfill.js"></script>
 <script src="promise.prototype.finally/finally.js"></script>
 
-<script src="geheugen/dist/geheugen.js"></script>
+<script src="@kjots/geheugen/dist/geheugen.js"></script>
 
 <script>
     var memo = geheugen.memoise({ factory: function () { return getAsyncValue(); } });

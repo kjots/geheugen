@@ -1,5 +1,5 @@
 {
-  "name": "geheugen",
+  "name": "@kjots/geheugen",
   "version": "1.6.0",
   "description": "A memoisation toolkit",
   "main": "lib/index.js",
