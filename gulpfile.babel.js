@@ -57,7 +57,7 @@ function dist(recompile) {
 
     return browserify('./lib/index.js', { debug: true, standalone: packageInfo.name })
         .bundle()
-        .pipe(vinylSourceStream(`${packageInfo.name}.js`))
+        .pipe(vinylSourceStream(`${packageInfo.name}.js`.replace(/^.*\//, '')))
         .pipe(vinylBuffer())
         .pipe(gulpSourcemaps.init({ loadMaps: true }))
         .pipe(gulpSourcemaps.write('.', { includeContent: false, sourceRoot: '..' }))
