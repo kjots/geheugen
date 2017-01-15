@@ -1,5 +1,11 @@
 # geheugen
 
+### DEPRECATED
+
+**This package has been deprecated.**
+
+**Use [@kjots/geheugen](https://www.npmjs.com/package/@kjots/geheugen) instead.**
+
 [![Build Status](https://travis-ci.org/kjots/geheugen.svg?branch=master)](https://travis-ci.org/kjots/geheugen)
 [![npm version](https://badge.fury.io/js/geheugen.svg)](https://www.npmjs.com/package/geheugen)
 
